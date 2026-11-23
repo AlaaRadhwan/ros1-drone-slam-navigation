@@ -24,4 +24,4 @@ This project builds on the following upstream work. None of it was created by th
 
 Excluded because they are third-party or unrelated to the demonstrated pipeline: `darknet_ros` + YOLO weights, `web_video_server`, `async_web_server_cpp`, the AWS warehouse zip, `iq_gnc`, `get-pip.py`.
 
-The author's contributions are described in the README and licensed under [LICENSE](LICENSE). AI assistance (ChatGPT) was used during development.
+The author's contributions are described in the README and licensed under [LICENSE](LICENSE). That MIT license covers only the author's original contributions. Files under `overlay/iq_sim/` that derive from Intelligent-Quads `iq_sim` (the world and drone model) remain subject to the upstream MIT notice in `overlay/iq_sim/LICENSE.iq_sim-upstream-MIT`. Third-party components keep their own licenses. AI assistance (ChatGPT) was used during development.

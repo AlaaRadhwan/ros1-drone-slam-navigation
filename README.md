@@ -6,25 +6,34 @@ A quadrotor simulated in Gazebo and flown by ArduPilot SITL builds a 2D occupanc
 
 > **Archival project (2024).** This is a cleaned, source-only release of a personal project built on Ubuntu 20.04 / ROS Noetic. It has **not** been re-run since archiving, and the archived ROS-to-MAVLink bridge contains an unresolved coordinate-conversion discrepancy. Read [Status and limitations](#status-and-limitations) before relying on it.
 
-## Demo and write-ups
+## Demo
 
-- **Navigation demo (YouTube):** <https://youtu.be/c8f3adqbQ-4> — the drone flying to RViz-selected goals in Gazebo (author-confirmed demonstration, 2024)
-- LinkedIn: [Utilizing LiDAR in Drone Simulation](https://lnkd.in/p/dekMzetw) · [Finally, Autonomous Drone Navigation!](https://lnkd.in/p/d3wsPAYf)
-- Medium ([profile](https://medium.com/@alaaRadhwan)): [Let's get this drone flying](https://medium.com/@alaaRadhwan/lets-get-this-drone-flying-6233f28b90de) · [Utilizing LiDAR in Drone Simulation](https://medium.com/@alaaRadhwan/utilizing-lidar-in-drone-simulation-5f1f645e1b64) · [Milestone Reached](https://medium.com/@alaaRadhwan/milestone-reached-5a172615f679)
+[![Autonomous Drone Navigation: the drone flying to goals selected in RViz (YouTube)](https://img.youtube.com/vi/c8f3adqbQ-4/maxresdefault.jpg)](https://youtu.be/c8f3adqbQ-4)
 
-![Saved SLAM map](docs/evidence/my_map_cropped.png)
-*Portfolio visualization of the saved 2D occupancy grid `my_map` (29 Jul 2024; cropped from a 4000×4000 map at 0.05 m/pixel). Free = white, occupied = black, unknown = grey. This PNG is not a loadable map; see [docs/evidence/README.md](docs/evidence/README.md).*
+*Click to watch the original 2024 demonstration on YouTube: the simulated drone flying to goals selected in RViz. The video is the author's recording of the historical system, not output of the code in this repository.*
+
+**Write-ups:** [LinkedIn: Utilizing LiDAR in Drone Simulation](https://lnkd.in/p/dekMzetw) · [LinkedIn: Finally, Autonomous Drone Navigation!](https://lnkd.in/p/d3wsPAYf) · Medium ([profile](https://medium.com/@alaaRadhwan)): [Let's get this drone flying](https://medium.com/@alaaRadhwan/lets-get-this-drone-flying-6233f28b90de) · [Utilizing LiDAR in Drone Simulation](https://medium.com/@alaaRadhwan/utilizing-lidar-in-drone-simulation-5f1f645e1b64) · [Milestone Reached](https://medium.com/@alaaRadhwan/milestone-reached-5a172615f679)
+
+## SLAM maps
+
+| `my_map` (29 Jul 2024) | `map2` (3 Aug 2024) |
+|:---:|:---:|
+| ![my_map](docs/evidence/my_map_cropped.png) | ![map2](docs/evidence/map2_cropped.png) |
+
+*Portfolio visualizations of two saved gmapping occupancy grids (cropped from 4000×4000 maps at 0.05 m/pixel; free = white, occupied = black, unknown = grey). They are images for viewing only, not loadable maps. See [docs/evidence/README.md](docs/evidence/README.md).*
 
 ## Architecture at a glance
 
-```
-RViz 2D Nav Goal ─► /move_base_simple/goal ─► move_base (NavFn + TrajectoryPlannerROS) ─► /move_base/NavfnROS/plan
-        ▲                                                                                      │
-        │ /map, TF map→odom                                                                    ▼
-  slam_gmapping ◄── /spur/laser/scan (Gazebo LiDAR)                       navigation_test.py  (custom, pymavlink)
-        ▲                                                                                      │ MISSION_ITEM_INT; GUIDED → ARM → AUTO → MISSION_START
-        └── TF odom → base_link → hokuyo_link → hokuyo_sensor_link                             ▼
-                                                                                  ArduPilot SITL ◄──► Gazebo (ArduPilot plugin)
+```mermaid
+flowchart LR
+  RV["RViz 2D Nav Goal"] --> MB["move_base<br/>NavFn + TrajectoryPlannerROS"]
+  GM["slam_gmapping"] -->|"/map, TF map to odom"| MB
+  LID["Gazebo LiDAR<br/>/spur/laser/scan"] --> GM
+  ODOM["odom to base_link TF<br/>MAVROS in the final demo (author recollection)"] --> GM
+  MB -->|"/move_base/NavfnROS/plan"| BR["navigation_test.py<br/>custom pymavlink bridge"]
+  BR -->|"MISSION_ITEM_INT, GUIDED, ARM, AUTO"| SITL["ArduPilot SITL"]
+  SITL <--> GZ["Gazebo"]
+  GZ --> LID
 ```
 
 The custom integration work is the RViz goal → planner → **Python MAVLink bridge** → ArduPilot SITL chain, the TF and SLAM configuration, the LiDAR drone model and walled world, and a Flask/Leaflet ground station. Full node/topic/TF diagram and the odometry-source discussion: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).

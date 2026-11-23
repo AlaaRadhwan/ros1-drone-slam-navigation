@@ -19,8 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-Scope: this license covers only the author's original contributions. Files under
-overlay/iq_sim/ that derive from Intelligent-Quads iq_sim (world, drone model) remain
-subject to the upstream MIT notice in overlay/iq_sim/LICENSE.iq_sim-upstream-MIT.
-See THIRD_PARTY_NOTICES.md.
