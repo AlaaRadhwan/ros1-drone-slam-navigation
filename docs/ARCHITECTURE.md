@@ -1,31 +1,65 @@
 # Architecture
 
-Everything below comes from the preserved source (`overlay/iq_sim`, `ground_station`) and the two recorded TF snapshots in `docs/evidence/`. Items that rest on the author's recollection are marked.
+Everything below comes from the preserved source (`overlay/iq_sim`, `ground_station`) and the two recorded TF snapshots in `docs/evidence/`. Items that rest on the author's recollection are marked. Details are kept in tables and text below each diagram rather than inside the diagrams.
 
-## Node / topic diagram
+## 1. Navigation pipeline
 
 ```mermaid
-flowchart LR
-  subgraph Sim["Gazebo 11 + ArduPilot SITL"]
-    GZ["Gazebo world: walls.world\nmodel drone_with_lidar_camera"]
-    SITL["ArduCopter SITL\n(sim_vehicle.py -f gazebo-iris)"]
-    GZ <-->|"ArduPilot plugin\nUDP 9002/9003"| SITL
-  end
-
-  GZ -->|"/spur/laser/scan\n1024 beams, 10 Hz"| GM["slam_gmapping"]
-  GZ -->|"/webcam/image_raw"| GS["Flask ground station"]
-  SITL <-->|"UDP 14551"| MAV["MAVROS"]
-  MAV -.->|"odom → base_link\n(final demo, author recollection;\nTF configuration not preserved)"| GM
-  GZ -.->|"/gazebo/model_states\n(alternative)"| TFB["tf_broadcaster.py"]
-  TFB -.->|"odom → base_link, hokuyo links\n(frames.png snapshot)"| GM
-
-  GM -->|"/map, TF map→odom"| MB["move_base\nNavFn + TrajectoryPlannerROS"]
-  RV["RViz 2D Nav Goal"] -->|"/move_base_simple/goal"| MB
-  MB -->|"/move_base/NavfnROS/plan"| BR["navigation_test.py\n(GoalToMAVLink)"]
-  BR -->|"pymavlink UDP 14550\nMISSION_ITEM_INT, GUIDED, ARM,\nAUTO, MISSION_START"| SITL
-  GS -->|"pymavlink UDP 14550"| SITL
+flowchart TD
+  A["RViz 2D Nav Goal"] --> B["move_base<br/>NavFn global planner"]
+  B --> C["navigation_test.py<br/>custom Python bridge"]
+  C --> D["MAVLink mission<br/>upload and start"]
+  D --> E["ArduPilot SITL"]
+  E --> F["Gazebo drone motion"]
 ```
-Solid arrows are preserved in source; dashed arrows are the two alternative odometry paths discussed next.
+
+| Step | Detail | Source |
+|---|---|---|
+| RViz goal | Published on `/move_base_simple/goal` | `rviz/navigation.rviz` |
+| `move_base` | NavFn global planner, TrajectoryPlannerROS local planner; plan on `/move_base/NavfnROS/plan` | `launch/navigation.launch`, `config/*.yaml` |
+| Python bridge | `GoalToMAVLink` subscribes to the plan, clears the mission, converts every pose to `MISSION_ITEM_INT`, then sets GUIDED, arms, sets AUTO and sends `MISSION_START` | `scripts/navigation_test.py` |
+| Link to the vehicle | pymavlink over UDP 14550 | `scripts/navigation_test.py` |
+| ArduPilot SITL | ArduCopter SITL started with `sim_vehicle.py -f gazebo-iris` | `scripts/startsitl.sh` |
+| Gazebo drone | ArduPilot plugin exchanges motor and sensor data with Gazebo over UDP 9002/9003 | `models/drone_with_lidar_camera/model.sdf` |
+
+The map-to-latitude/longitude conversion inside the bridge is an unresolved archival discrepancy; see [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md#1-coordinate-conversion-in-the-path-to-mavlink-bridge-unresolved).
+
+## 2. SLAM and sensing pipeline
+
+```mermaid
+flowchart TD
+  A["Gazebo 2D LiDAR"] --> B["scan topic"]
+  B --> C["slam_gmapping"]
+  D["odom to base_link TF"] --> C
+  C --> E["TF: map to odom"]
+  C --> F["Occupancy map"]
+```
+
+| Item | Detail |
+|---|---|
+| LiDAR | Hokuyo-style 2D scan, 1024 beams over ±π, 10 Hz, 30 m range; frame `hokuyo_sensor_link` |
+| Scan topic | `/spur/laser/scan`, remapped into gmapping |
+| `slam_gmapping` | `gmapping.launch`: 80 particles, linear/angular update 0.2/0.2. `start_gmapping.launch`: 30 particles, `delta` 0.025 |
+| Outputs | `/map` occupancy grid and the `map → odom` transform; the map feeds the `move_base` global costmap |
+| Odometry input | The `odom → base_link` transform. Its source is discussed in section 3 |
+| Saved maps | 0.05 m/pixel, origin (−100, −100); see [evidence](evidence/README.md) |
+
+## 3. Odometry / TF evidence (comparison, not the system pipeline)
+
+This diagram compares three pieces of evidence about where `odom → base_link` came from. It is not a runtime architecture.
+
+```mermaid
+flowchart TD
+  subgraph R["Final demo (author recollection)"]
+    R1["ArduPilot SITL"] --> R2["MAVROS"] --> R3["odom to base_link"]
+  end
+  subgraph G["frames.gv - 29 Jul 2024"]
+    G1["/mavros"] --> G2["odom to base_link"]
+  end
+  subgraph P["frames.png - 26 Jul 2024"]
+    P1["/tf_broadcaster"] --> P2["odom to base_link<br/>and Hokuyo frames"]
+  end
+```
 
 ## TF and odometry: what the evidence shows
 

@@ -26,17 +26,17 @@ A quadrotor simulated in Gazebo and flown by ArduPilot SITL builds a 2D occupanc
 
 ```mermaid
 flowchart LR
-  RV["RViz 2D Nav Goal"] --> MB["move_base<br/>NavFn + TrajectoryPlannerROS"]
-  GM["slam_gmapping"] -->|"/map, TF map to odom"| MB
-  LID["Gazebo LiDAR<br/>/spur/laser/scan"] --> GM
-  ODOM["odom to base_link TF<br/>MAVROS in the final demo (author recollection)"] --> GM
-  MB -->|"/move_base/NavfnROS/plan"| BR["navigation_test.py<br/>custom pymavlink bridge"]
-  BR -->|"MISSION_ITEM_INT, GUIDED, ARM, AUTO"| SITL["ArduPilot SITL"]
-  SITL <--> GZ["Gazebo"]
-  GZ --> LID
+  A["RViz goal"] --> B["move_base<br/>NavFn"]
+  B --> C["Python<br/>MAVLink bridge"]
+  C --> D["ArduPilot SITL<br/>Gazebo drone"]
+  D --> O["MAVROS<br/>odometry"]
+  O --> S["slam_gmapping"]
+  L["LiDAR scan"] --> S
+  S --> M["Map"]
+  M --> B
 ```
 
-The custom integration work is the RViz goal → planner → **Python MAVLink bridge** → ArduPilot SITL chain, the TF and SLAM configuration, the LiDAR drone model and walled world, and a Flask/Leaflet ground station. Full node/topic/TF diagram and the odometry-source discussion: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+*MAVROS odometry is the author's recollection of the final demonstration; see [Odometry sources](#odometry-sources-as-evidenced).* The custom integration work is the RViz goal → planner → **Python MAVLink bridge** → ArduPilot SITL chain, the TF and SLAM configuration, the LiDAR drone model and walled world, and a Flask/Leaflet ground station. Detailed navigation, SLAM and odometry/TF diagrams: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Status and limitations
 
