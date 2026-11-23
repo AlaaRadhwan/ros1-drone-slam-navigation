@@ -1,0 +1,60 @@
+<div class="takeoff-slider-div">
+
+    <!-- ------- TAKE OFF BUTON ------- -->
+    <div class="takeoff-button">
+        <form id="takeoffForm">
+            <label for="altitude">Takeoff Alt:</label>
+            <input type="text" id="altitude" name="altitude" placeholder="Enter Altitude">
+            <button type="button" id="takeoffButton" class="control-buttons" data-button-id="takeoff">SEND</button>
+        </form>
+
+        <script src="{{ url_for('static', filename='js/buttonsScripts/takeoffScript.js') }}"></script>   
+    </div>
+
+    <!-- ------- YAW INPUT CONTROLS ------- -->
+    <div class="takeoff-button">
+        <form id="yawForm">
+            <label for="yaw">Yaw:</label>
+            <input type="text" id="yaw" name="yaw" placeholder="Enter Yaw">
+            <button type="button" id="yawButton" class="control-buttons" data-button-id="yaw">SEND</button>
+        </form>
+
+        <script src="{{ url_for('static', filename='js/buttonsScripts/takeoffScript.js') }}"></script>   
+    </div>
+
+    <!-- ------- ALTITUDE INPUT CONTROLS ------- -->
+    <div class="takeoff-button">
+        <form id="altForm">
+            <label for="freeAlt">Change Alt:</label>
+            <input type="text" id="freeAlt" name="freeAlt" placeholder="Enter Altitude">
+            <button type="button" id="altButton" class="control-buttons" data-button-id="freeAlt">SEND</button>
+        </form>
+
+        <script src="{{ url_for('static', filename='js/buttonsScripts/takeoffScript.js') }}"></script>   
+    </div>
+
+</div>
+
+<!-- ------------ LAND AND MODES BUTTONS FRONTEND ------------ -->
+
+<div class="land-modes-div">
+    <!-- <div class="land-arm-buttons">
+        <div class="land-buttons-div inner-divs">
+            <button class="control-buttons" data-button-id="land">LAND</button>
+            <button class="control-buttons" data-button-id="rtl">RTL</button> 
+        </div>
+
+        <div class="arm-disarm-div inner-divs">
+            <button class="control-buttons" data-button-id="armdisarm">ARM</button>
+            <button class="control-buttons" data-button-id="mode">DISARM</button> 
+        </div>
+    </div>
+
+    <div class="modes-div inner-divs">
+        <button class="control-buttons" data-button-id="armdisarm">GUIDED</button>
+        <button class="control-buttons" data-button-id="mode">STABLE</button> 
+    </div> -->
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/buttonsScripts/landButtons.js') }}"></script>
+
+</div>

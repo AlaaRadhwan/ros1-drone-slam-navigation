@@ -1,0 +1,717 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: black;
+
+    --background-div-color: rgba(27, 27, 27, 1);
+    --front-div-color: rgba(42, 42, 42, 1);
+    --button-color: rgba(80, 81, 78, 1);
+    --input-color: rgba(92, 92, 92, 1);
+
+    --border-radius: 10px;
+
+    --font-color: #FFFFFF;
+    --second-font-color: #c9c9c9;
+    --dim-font-color: rgba(141, 141, 141, 1);
+    --slider-button-color: ;
+    --slider-background-color: ;
+
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+
+}
+
+#base {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ----------------- GENERAL BUTTON CSS ----------------- */
+button {
+    background-color: var(--button-color);
+    color: var(--font-color);
+    font-size: 13px;
+    width: 100px;
+    height: 35px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+
+    border: none;
+    border-radius: var(--border-radius);
+
+}
+
+button:hover {
+    background-color: #bebebe;
+    color: black;
+}
+
+/* ----------------- MAP BACKGROUND CSS ----------------- */
+
+.map-background {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    top: 0;
+    z-index: 0;
+}
+
+#map {
+    width: 100vw;
+    height: 75vh;
+
+}
+
+
+
+/* ----------------- CAMERA SIDE DIV CSS ----------------- */
+.camera-side-div {
+    position: absolute;
+    z-index: 2;
+
+    bottom: 2vh;
+    left: 2vw;
+
+    background-color: var(--front-div-color);
+    padding: 7px;
+
+    border-radius: var(--border-radius);
+}
+
+.camera-side-div .live-feed img {
+    width: 260px;
+    height: 240px;
+
+    border-radius: var(--border-radius);
+}
+
+.camera-side-info .info {
+    display: flex;
+    flex-direction: row;
+
+    margin: 10px 10px;
+}
+
+.camera-side-info .text {
+    font-size: 13px;
+}
+
+.camera-side-info .text #header {
+    color: var(--dim-font-color);
+}
+
+.camera-side-info .text #value {
+    color: var(--font-color);
+}
+
+.camera-side-info .icon {
+    background-color: var(--button-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: var(--border-radius);
+
+    margin-right: 10px;
+}
+
+.camera-side-info img {
+    width: 30px;
+    height: 30px;
+
+    margin: 5px;
+
+}
+
+/* ----------------- CONSOLE SIDE DIV CSS ----------------- */
+
+.console-div {
+    position: absolute;
+    z-index: 2;
+
+    bottom: 4vh;
+    right: 2vw;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: left;
+    justify-content: flex-start;
+
+    background-color: var(--background-div-color);
+    color: var(--font-color);
+    font-size: 13px;
+
+    border-radius: var(--border-radius);
+
+    padding: 10px 10px;
+
+    width: 400px;
+    height: 170px;
+
+}
+
+.console-header {
+    background-color: var(--front-div-color);
+    margin: 5px 0;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+}
+
+.console-body {
+    background-color: var(--front-div-color);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+
+    height: 100px;
+}
+
+.console-body p {
+    margin: 4px 0;
+}
+
+.console-body .succ {
+    color: rgba(110, 255, 43, 0.71);
+}
+
+.console-body .error {
+    color: rgba(236, 9, 9, 1);
+}
+
+/* ----------------- TOP LINKS DIV CSS ----------------- */
+
+.top-links {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+
+    color: rgb(216, 216, 216);
+
+    font-size: 13px;
+}
+
+.top-links .top-link {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 5px 10px;
+}
+
+.top-links img {
+    width: 27px;
+    height: 27px;
+
+    margin: 0 7px;
+}
+
+
+/* ----------------- SIDE LINKS DIV CSS ----------------- */
+
+.side-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--front-div-color);
+    padding: 10px 5px;
+
+    border-radius: var(--border-radius);
+
+    height: 165px;
+}
+
+.side-links img {
+    width: 25px;
+    height: 25px;
+
+    margin: 10px 5px;
+}
+
+.line-divider {
+    width: 2px;
+    background-color: var(--front-div-color);
+    height: 165px;
+    margin: 0 3px 0 9px;
+}
+
+/* ----------------- MAIN CONTROLS DIV CSS ----------------- */
+
+.main-controls-div {
+    width: 100vw;
+    /* height: 210px; */
+
+    background-color: var(--background-div-color);
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
+    z-index: 2;
+
+}
+
+/* ----------------- TABS DIV CSS ----------------- */
+
+
+.tab_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+.tab_group {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--front-div-color);
+
+    padding: 0 10px;
+    margin-right: 5px;
+
+    height: 171px;
+    border-radius: var(--border-radius);
+    position: relative;
+    left: 0;
+}
+
+.tab_group .tab {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.tab_group label {
+    width: auto;
+    height: auto;
+}
+
+.tab_group .tab img {
+    width: 25px;
+    height: 25px;
+    margin: 5px 0;
+}
+
+.tab_content {
+    height: 171px;
+
+    margin: 10px 0;
+}
+
+#one:checked~.tab_group #one-tab,
+#two:checked~.tab_group #two-tab {
+    color: var(--font-color);
+}
+
+.tab_wrapper input[type="radio"] {
+    display: none;
+}
+
+#one:checked~.tab_contents #one-tab-content,
+#two:checked~.tab_contents #two-tab-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.tab_contents .tab_content {
+    display: none;
+}
+
+/* ----------------- XYZ CONTROLS DIV CSS ----------------- */
+
+.main-controls-div .xyz-controls-div {
+    background-color: var(--front-div-color);
+    border-radius: var(--border-radius);
+    color: var(--font-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 10px 0;
+    margin-left: 10px;
+
+}
+
+
+/* ----------------- TAKEOFF SLIDERS DIV CSS ----------------- */
+.takeoff-slider-div {
+    margin: 0px 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+/* ----------------- TAKEOFF BUTTON DIV CSS ----------------- */
+
+.takeoff-button {
+    background-color: var(--front-div-color);
+    border-radius: var(--border-radius);
+
+    margin: 3px 0;
+}
+
+.takeoff-button form {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+
+}
+
+.takeoff-button img {
+    width: 16px;
+    height: 16px;
+}
+
+.takeoff-button button {
+    margin: 0 4px;
+}
+
+.takeoff-button .arrow-button {
+    margin: 0 6px;
+    width: 40px;
+}
+
+.takeoff-button label,
+input {
+    margin: 0 5px;
+}
+
+.takeoff-button input {
+    padding-left: 5px;
+    height: 25px;
+    width: 50px;
+
+    background-color: var(--button-color);
+    border: none;
+    border-radius: 5px;
+    color: var(--font-color);
+
+    flex-grow: 1;
+    margin: 0 2px;
+}
+
+.takeoff-button label {
+    color: var(--font-color);
+    width: 70px;
+    height: 15px;
+
+    font-size: 12px;
+}
+
+.takeoff-button label::after {
+    top: 8px;
+    left: 10px;
+}
+
+
+
+
+
+
+
+/* ----------------- LAND AND MODE BUTTONS DIV CSS ----------------- */
+
+.land-modes-div {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+}
+
+.land-modes-div .land-arm-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.land-modes-div .inner-divs {
+    background-color: var(--front-div-color);
+    border-radius: var(--border-radius);
+    padding: 10px;
+
+    margin: 0px 3px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* height: 160px; */
+}
+
+.land-modes-div .modes-div {
+    flex-direction: row;
+    margin-top: 5px;
+}
+
+.land-modes-div .modes-div button {
+    margin: 0 8px;
+}
+
+
+.land-modes-div button {
+    margin: 5px 0;
+}
+
+
+/* ----------------- ************************* ----------------- */
+/* LOCATION TAB DIV CSS */
+/* ----------------- ************************* ----------------- */
+
+/* ----------------- SLIDES CONTROL DIV CSS ----------------- */
+
+
+.oneclick-waypoints {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--front-div-color);
+
+    padding: 10px 20px;
+    margin: 0 10px;
+
+    border-radius: var(--border-radius);
+
+}
+
+.oneclick-waypoints button {
+    margin-top: 10px;
+    width: 200px;
+}
+
+.oneclick-waypoints .sliders {
+    display: flex;
+    flex-direction: row;
+
+    margin: 15px 0;
+
+    color: var(--dim-font-color);
+
+    gap: 10px;
+}
+
+.sliders .slider-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 13px;
+}
+
+.sliders label {
+    margin: 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 28px;
+
+    margin-top: 12px;
+}
+
+/* Hide default html checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: var(--button-color);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 20px;
+    left: 1px;
+    bottom: 1px;
+    background-color: var(--front-div-color);
+    /* background-color: #272727; */
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    /* background-color: var(--input-color); */
+    background-color: #8A9ACA;
+}
+
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 5px;
+}
+
+.slider.round:before {
+    border-radius: 5px;
+}
+
+
+/* ----------------- MAP CONTROL BUTTONS DIV CSS ----------------- */
+
+.map-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--front-div-color);
+    border-radius: var(--border-radius);
+
+    margin: 4px 10px;
+}
+
+.map-buttons button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--button-color);
+    border-radius: 5px;
+
+    margin: 5px 5px;
+    padding: 5px 5px;
+
+    width: 40px;
+}
+
+.map-buttons button:hover {
+    background-color: rgb(92, 92, 92);
+}
+
+.map-buttons img {
+    width: 20px;
+    height: 20px;
+
+}
+
+/* ----------------- CUSTOM NAV DIV CSS ----------------- */
+
+.nav-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--front-div-color);
+    border-radius: var(--border-radius);
+    padding: 0 10px;
+
+    /* width: 400px; */
+}
+
+.nav-type-elements {
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-type-inner {
+    display: flex;
+    flex-direction: column;
+
+    /* align-items: center; */
+    /* justify-content: space-between; */
+}
+
+.nav-type-inner p {
+    font-size: 13px;
+    color: var(--dim-font-color);
+}
+
+.text-div {
+    margin-right: 5px;
+}
+
+.text-div p {
+    margin: 10px;
+}
+
+
+.button-slider img {
+    width: 20px;
+    height: 20px;
+}
+
+.button-slider #cornersButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+
+    margin-top: 10px;
+}
+
+.button-slider #cornersButton:hover {
+    background-color: rgb(92, 92, 92);
+}
+
+.nav-type #sendCorners {
+    margin-top: 10px;
+    width: 200px;
+}

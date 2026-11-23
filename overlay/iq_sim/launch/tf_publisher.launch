@@ -1,0 +1,6 @@
+<launch>
+    <!-- Static transform from base_link to lidar_frame-->
+    <node pkg="tf2_ros" type="static_transform_publisher"
+        name="base_to_lidar" args="0 0 0.1 0 0 0 base_link hokuyo_link"
+    />
+</launch>

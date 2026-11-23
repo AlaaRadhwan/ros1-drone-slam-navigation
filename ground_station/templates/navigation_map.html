@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Css File include -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css')}}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/inventory_style.css')}}">
+
+    <!-- JQuery include -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- socket.io include -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+
+    <!-- My JS Files include -->
+    <script src="{{ url_for('static', filename='js/buttonsScripts/navChoice.js') }}"></script>   
+
+    <script src="{{ url_for('static', filename='js/navigationScripts/wasd_nav.js') }}"></script>   
+
+    
+    <!-- leaflet files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet/leaflet.css') }}" />
+    <script src="{{ url_for('static', filename='leaflet/leaflet.js') }}" ></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
+    <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+
+    <!-- Include Plotly.js Javascript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Include Chart.js JavaScript -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    
+    <title>Navigation</title>
+</head>
+<body>
+
+    <section id="base-section">
+        <!-- ------------ UPPER CONTROLS-DIV ------------ -->
+        <div class="upper-controls-div">
+            <!-- TAKEOFF SECTION -->
+            <div class="takeoff-button control-div">
+                <form id="takeoffForm">
+                    <!-- <label for="altitude">Takeoff Alt:</label> -->
+                    <input type="text" id="altitude" name="altitude" placeholder="Enter Altitude">
+                    <button type="button" id="takeoffButton" class="control-buttons" data-button-id="takeoff">TAKEOFF</button>
+                </form>
+            </div>
+
+            <!-- DIRECTION BUTTONS SECTION -->
+            <div class="direction-buttons control-div">
+                <form id="altForm">
+                    <!-- <label for="freeAlt"> :</label> -->
+                    <div class="buttons-div">
+                        <div class="first_raw direction-raw">
+                            <button type="button" id="increaseRot" class="control-buttons arrow-button" data-button-id="rotate-plus">
+                                <img src="{{ url_for('static', filename='images/rotate-right.png')}}" alt="">
+                            </button>
+                            <button type="button" id="forward" class="control-buttons arrow-button" data-button-id="forward">
+                                <img src="{{ url_for('static', filename='images/up_arrow.png')}}" alt="">
+                            </button>
+                            <button type="button" id="decreaseRot" class="control-buttons arrow-button" data-button-id="rotate-minus">
+                                <img src="{{ url_for('static', filename='images/rotate-left.png')}}" alt="">
+                            </button>
+                            <button type="button" id="increaseAlt" class="control-buttons arrow-button" data-button-id="freeAlt-plus">
+                                <img src="{{ url_for('static', filename='images/up_arrow.png')}}" alt="">
+                            </button>
+                        </div>
+                        <div class="second_raw direction-raw">
+                            <button type="button" id="left" class="control-buttons arrow-button" data-button-id="left">
+                                <img src="{{ url_for('static', filename='images/down_arrow.png')}}" alt="">
+                            </button>
+                            <button type="button" id="backward" class="control-buttons arrow-button" data-button-id="backward">
+                                <img src="{{ url_for('static', filename='images/down_arrow.png')}}" alt="">
+                            </button>
+                            <button type="button" id="right" class="control-buttons arrow-button" data-button-id="right">
+                                <img src="{{ url_for('static', filename='images/down_arrow.png')}}" alt="">
+                            </button>
+                            <button type="button" id="decreaseAlt" class="control-buttons arrow-button" data-button-id="freeAlt-minus">
+                                <img src="{{ url_for('static', filename='images/down_arrow.png')}}" alt="">
+                            </button>
+                        </div>
+                    </div>
+
+                    <input type="number" id="alt_amount" name="freeAlt" placeholder="Amount:">
+                </form>
+            </div>
+
+            <!-- LAND AND ARM BUTTONS -->
+            <div class="land-buttons control-div">
+                <div class="first-column land-column">
+                    <button class="control-buttons" data-button-id="land">LAND</button>
+                    <button class="control-buttons" data-button-id="rtl">RTL</button> 
+                    <button class="control-buttons" data-button-id="guided">GUIDED</button>
+                </div>
+                <div class="second-column land-column">
+                    <button class="control-buttons" id="armButton" data-button-id="arm">ARM</button>
+                    <button class="control-buttons" id="disarmButton" data-button-id="disarm">DISARM</button> 
+                    <button class="control-buttons" data-button-id="stable">STABLE</button> 
+                </div>
+                <div class="land-column">
+                    <button onclick="sendWaypoints()">Send Waypoints</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ------------ CAMERA DIV FRONTEND ------------ -->
+
+        <div class="camera-side-div">
+            <div class="live-feed">
+                <img src="{{ url_for('camera_process.video_feed') }}" alt="">
+            </div>
+        </div>
+
+        <!-- ------------ LOWER CONTROLS-DIV ------------ -->
+
+        <div class="lower-controls-div">
+            <!-- XYZ COORDINATES SECTION -->
+             <div class="xyz-coords control-div">
+                <form method="post" action="{{ url_for('position_process.process_positions')}}">
+                    <div class="form-inputs">
+                        <div class="pos-inputs">
+                            <label for="x_pos" nameholder="X: "> 
+                                <input type="text" id="x_pos" name="x_pos" placeholder="X:">
+                            </label>
+        
+                            <label for="y_pos" nameholder="Y: ">
+                                <input type="text" name="y_pos" id="y_pos" placeholder="Y:">
+                            </label>
+                            
+        
+                            <label for="z_pos" nameholder="Z: ">
+                                <input type="text" name="z_pos" id="z_pos" placeholder="Z:">
+                            </label>
+                        </div>
+
+                        <div class="rot-inputs">
+                            <label for="yaw_rot" class="yaw-speed-label" nameholder="Yaw: "> 
+                                <input type="text" id="yaw_rot" class="rot-yaw-input" name="yaw_rot" placeholder="Yaw:" >
+                            </label>
+                            
+        
+                            <label for="yaw_speed" class="yaw-speed-label" nameholder="Rot Speed: ">
+                                <input type="text" name="yaw_speed" id="yaw_speed" class="rot-speed-input" placeholder="Turn Speed:">
+                            </label>
+    
+                            <label for="yaw_speed" class="yaw-speed-label" nameholder="Move Speed: ">
+                                <input type="text" name="move_speed" id="move_speed" value="1" class="rot-move-speed-input" placeholder="Move Speed:">
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit">SEND</button>
+
+                </form>
+             </div>
+        </div>
+
+        <!-- ------------ CHART JS DIV FRONTEND ------------ -->
+    </section>
+    
+</body>
+<footer>
+    <script src="{{ url_for('static', filename='js/buttonsScripts/takeoffScript.js') }}"></script>   
+    <script src="{{ url_for('static', filename='js/buttonsScripts/buttonControls.js') }}"></script>   
+    <script src="{{ url_for('static', filename='js/buttonsScripts/landButtons.js') }}"></script>   
+    <script src="{{ url_for('static', filename='js/buttonsScripts/sendWaypoints.js') }}"></script>   
+
+
+</footer>
+</html>

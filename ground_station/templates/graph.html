@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Include CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/graph.css')}}">
+    <!-- Include Chart.js JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Graphs</title>
+</head>
+<body>
+    <div class="links">
+        <div class="navigation-link-div">
+            <a href="{{ url_for('navigation_page') }}">Navigation Page</a>
+        </div>
+    </div>
+    <div class="graph-div">
+        <canvas id="lat-graph"></canvas>
+        <canvas id="lng-graph"></canvas>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/graphScripts/graph.js') }}"></script>
+
+    </div>
+</body>
+</html>

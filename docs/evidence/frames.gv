@@ -1,0 +1,13 @@
+digraph G {
+"hokuyo_link" -> "hokuyo_sensor_link"[label="Broadcaster: /hokuyo_to_sensor\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 4525.527 sec old)\nBuffer length: 0.000 sec\n"];
+"base_link" -> "hokuyo_link"[label="Broadcaster: /base_to_hokuyo\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 4525.527 sec old)\nBuffer length: 0.000 sec\n"];
+"odom" -> "base_link"[label="Broadcaster: /mavros\nAverage rate: 4.210 Hz\nMost recent transform: 4525.348 ( 0.179 sec old)\nBuffer length: 4.751 sec\n"];
+"map" -> "map_ned"[label="Broadcaster: /mavros\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 4525.527 sec old)\nBuffer length: 0.000 sec\n"];
+"odom" -> "odom_ned"[label="Broadcaster: /mavros\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 4525.527 sec old)\nBuffer length: 0.000 sec\n"];
+"map" -> "odom"[label="Broadcaster: /slam_gmapping\nAverage rate: 20.198 Hz\nMost recent transform: 4525.556 ( -0.029 sec old)\nBuffer length: 4.951 sec\n"];
+"base_link" -> "base_link_frd"[label="Broadcaster: /mavros\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 4525.527 sec old)\nBuffer length: 0.000 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 4525.527"[ shape=plaintext ] ;
+ }->"map";
+}

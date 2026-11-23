@@ -1,0 +1,9 @@
+# Unpinned: reconstructed from imports in ground_station/server_apps (original venv had Flask 3.0.1, Werkzeug 3.0.1, Python 3.8)
+flask
+flask-socketio
+flask-sqlalchemy
+mysqlclient
+pymavlink
+utm
+opencv-python
+# ROS-provided (apt, Noetic): rospy, cv_bridge, tf2_ros, mavros_msgs

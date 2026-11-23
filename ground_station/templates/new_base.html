@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Css File include -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css')}}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/map_nav_style.css')}}">
+
+    <!-- socket.io include -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+
+    <!-- My JS Files include -->
+    <script src="{{ url_for('static', filename='js/buttonsScripts/navChoice.js') }}"></script>   
+
+    <script src="{{ url_for('static', filename='js/navigationScripts/wasd_nav.js') }}"></script>   
+
+    
+    <!-- leaflet files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet/leaflet.css') }}" />
+    <script src="{{ url_for('static', filename='leaflet/leaflet.js') }}" ></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
+    <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+
+    <!-- Include Plotly.js Javascript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Include Chart.js JavaScript -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+    <section id="base">
+        <!-- ---------------- SIDE NAV DIV ---------------- -->
+        <!-- <div class="side-nav">
+            <div class="nav-image">
+                <a href="#Home">
+                    <img src="{{ url_for('static', filename='images/icons8-home-page-48.png')}}" alt="">
+                </a>
+            </div>
+
+            <div class="nav-image">
+                <a href="{{ url_for('navigation_page') }}">
+                    <img src="{{ url_for('static', filename='images/icons8-compass-50.png')}}" alt="">
+                </a>
+            </div>
+
+            <div class="nav-image">
+                <a href="#settings">
+                    <img src="{{ url_for('static', filename='images/icons8-setting-50.png')}}" alt="">
+                </a>
+            </div>
+        </div> -->
+
+        <!-- ---------------- Exteneded Html code here ---------------- -->
+        {% block content%}
+        {% endblock %}
+    </section>
+</body>
+<footer>
+    <script src="{{ url_for('static', filename='js/droneMarker.js') }}"></script>
+</footer>
+</html>

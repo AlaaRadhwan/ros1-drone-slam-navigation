@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: white;
+
+    --background-div-color: rgba(27, 27, 27, 1);
+    --front-div-color: rgba(42, 42, 42, 1);
+    --button-color: rgba(9, 18, 27, 0.87);
+    --input-color: rgba(92, 92, 92, 1);
+
+    --border-radius: 10px;
+
+    --font-color: #FFFFFF;
+    --second-font-color: #c9c9c9;
+    --dim-font-color: rgba(141, 141, 141, 1);
+    --slider-button-color: ;
+    --slider-background-color: ;
+
+    --controls-div-padding: 20px;
+
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ----------------- GENERAL BUTTON CSS ----------------- */
+button {
+    background-color: var(--button-color);
+    color: var(--font-color);
+    font-size: 13px;
+    /* width: 100px; */
+    /* height: 35px; */
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+
+    border: none;
+    border-radius: var(--border-radius);
+
+}
+
+button:hover {
+    background-color: var(--second-font-color);
+    color: var(--button-color);
+}
+
+input {
+    margin: 5px 0;
+    height: 35px;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding-left: 10px;
+
+}
+
+.control-div {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--controls-div-padding);
+    margin: 7.5px;
+
+    border-radius: 20px;
+    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.45);
+
+}
+
+#base-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ------- Upper-controls style ------- */
+.upper-controls-div {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+}
+
+/* TAKEOFF DIV */
+
+
+#takeoffForm {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#takeoffForm button {
+    margin: 5px 0;
+    padding: 11px;
+    border-radius: 20px;
+    
+}
+
+/* DIRECTION CONTROL BUTTONS */
+
+
+
+#altForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.buttons-div .direction-raw {
+    margin: 10px 0;
+}
+
+.buttons-div .direction-raw button {
+    height: 45px;
+    width: 45px;
+
+    margin: 0 2px;
+
+}
+
+.buttons-div .direction-raw img {
+    height: 20px;
+    width: 20px;
+
+}
+
+/* LAND ARM CONTROL BUTTONS */
+
+.land-column button {
+    height: 40px;
+    width: 60px;
+
+    margin: 5px 2px;
+}
+
+/* ------- Lower-controls style ------- */
+
+.xyz-coords {
+    padding: 10px;
+}
+.xyz-coords form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.xyz-coords form button {
+    height: 40px;
+    width: 120px;
+
+    margin-top: 4px;
+
+    font-size: 16px;
+}
+
+/* ------- Live feed style ------- */
+
+.camera-side-div {
+    padding: 10px;
+}
+
+.live-feed img {
+    width: 640px;
+    height: 480px;
+    border-radius: 10px;
+}
