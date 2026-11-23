@@ -25,15 +25,14 @@ A quadrotor simulated in Gazebo and flown by ArduPilot SITL builds a 2D occupanc
 ## Architecture at a glance
 
 ```mermaid
-flowchart LR
-  A["RViz goal"] --> B["move_base<br/>NavFn"]
-  B --> C["Python<br/>MAVLink bridge"]
-  C --> D["ArduPilot SITL<br/>Gazebo drone"]
-  D --> O["MAVROS<br/>odometry"]
-  O --> S["slam_gmapping"]
-  L["LiDAR scan"] --> S
-  S --> M["Map"]
-  M --> B
+flowchart TB
+    L["Gazebo LiDAR"] --> S["GMapping SLAM"]
+    S --> M["Occupancy map"]
+    M --> P["move_base / NavFn"]
+    R["RViz goal"] --> P
+    P --> B["Python MAVLink bridge"]
+    B --> A["ArduPilot SITL"]
+    A --> D["Gazebo drone"]
 ```
 
 *MAVROS odometry is the author's recollection of the final demonstration; see [Odometry sources](#odometry-sources-as-evidenced).* The custom integration work is the RViz goal → planner → **Python MAVLink bridge** → ArduPilot SITL chain, the TF and SLAM configuration, the LiDAR drone model and walled world, and a Flask/Leaflet ground station. Detailed navigation, SLAM and odometry/TF diagrams: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
